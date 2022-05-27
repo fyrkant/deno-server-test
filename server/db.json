@@ -1,0 +1,51 @@
+[
+	{
+		"id": 1,
+		"author": "John",
+		"text": "Hello",
+		"createdAt": "2020-01-01",
+		"votes": 0
+	},
+	{
+		"id": 2,
+		"author": "Jane",
+		"text": "Hi",
+		"createdAt": "2020-01-01",
+		"votes": 0
+	},
+	{
+		"id": 3,
+		"author": "John",
+		"text": "How are you?",
+		"createdAt": "2020-01-01",
+		"votes": 0
+	},
+	{
+		"id": 4,
+		"author": "Jane",
+		"text": "I am fine",
+		"createdAt": "2020-01-01",
+		"votes": 0
+	},
+	{
+		"id": 5,
+		"author": "John",
+		"text": "And you?",
+		"createdAt": "2020-01-01",
+		"votes": 0
+	},
+	{
+		"id": 6,
+		"author": "Jane",
+		"text": "I am fine too",
+		"createdAt": "2020-01-01",
+		"votes": 0
+	},
+	{
+		"id": 7,
+		"author": "John",
+		"text": "And you?",
+		"createdAt": "2020-01-01",
+		"votes": 0
+	}
+]

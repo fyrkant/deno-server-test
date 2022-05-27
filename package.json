@@ -1,0 +1,23 @@
+{
+  "name": "deno-server-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel client/index.html",
+    "build": "parcel build client/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fyrkant/deno-server-test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fyrkant/deno-server-test/issues"
+  },
+  "homepage": "https://github.com/fyrkant/deno-server-test#readme",
+  "devDependencies": {
+    "parcel": "^2.6.0"
+  }
+}

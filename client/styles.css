@@ -1,0 +1,56 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #e5e5e5;
+}
+
+:root {
+  --border-color: #e5e5e5;
+}
+
+main.container {
+  max-width: 960px;
+  margin: 1rem auto;
+  padding: 2rem;
+  background-color: #fff;
+}
+
+.container>h1 {
+  font-size: 1.6rem;
+  font-weight: normal;
+  margin-bottom: 1rem;
+}
+
+.container>header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 3rem;
+}
+
+.container>header .avatar {
+  flex-shrink: 0;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--border-color);
+}
+
+.container>header input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.container>header button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #7e34f6;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: #7e34f6;
+  color: #fff;
+
+}
