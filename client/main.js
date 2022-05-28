@@ -1,3 +1,5 @@
+import { format as formatDate } from "timeago.js";
+
 const baseUrl = "http://localhost:8899/api";
 
 const api = {
@@ -7,7 +9,7 @@ const api = {
   add: (comment) => {
     return fetch(baseUrl + "/comments", {
       method: "POST",
-      body: JSON.stringify(comment),
+      body: comment,
     }).then((r) => r.json());
   },
   upvote: (id) => {
@@ -20,13 +22,14 @@ const api = {
 const renderComment = (comment) => {
   const listItem = document.createElement("li");
   listItem.classList.add("comment");
+  const dateString = formatDate(comment.createdAt);
   listItem.innerHTML = `
   <img class="avatar" src="https://fakeface.rest/face/view/${comment.id}" />
   <div>
     <div class="comment-header">
       <span class="author"><b>${comment.author}</b></span>
       <span class="dot">・</span>
-      <span class="date">${comment.createdAt}</span>
+      <span class="date">${dateString}</span>
     </div>
     <p class="comment-content">${comment.text}</p>
     <div class="comment-footer">
@@ -58,18 +61,6 @@ const appendComments = (comments) => {
       commentList.appendChild(renderComment(c));
     });
   }
-
-  // const upvoteButtons = document.querySelectorAll("button.upvote-button");
-  // upvoteButtons.forEach((button) => {
-  //   console.log(button);
-  //   button.addEventListener("click", (e) => {
-  //     const id = e.target.dataset.id;
-
-  //     api.upvote(id).then((comments) => {
-  //       appendComments(comments);
-  //     });
-  //   });
-  // });
 };
 
 const getComments = async () => {
@@ -87,6 +78,7 @@ const saveComment = async (comment) => {
 
 const commentsForm = document.querySelector(".comments-form");
 
+// Vote on a comment
 commentsForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const id = e.submitter.dataset.id;
@@ -96,15 +88,15 @@ commentsForm.addEventListener("submit", async (e) => {
   appendComments(newComments);
 });
 
+// Add new comment
 submitButton.addEventListener("click", async (e) => {
   e.preventDefault();
   submitButton.disabled = true;
   const comment = input.value;
+  if (comment) {
+    await saveComment(comment);
+  }
 
-  await saveComment({
-    author: "John Doe",
-    text: comment,
-  });
   input.value = "";
   submitButton.disabled = false;
 });

@@ -15,17 +15,13 @@ export interface Comment {
   votes: number;
 }
 
-const db = new Database<Comment>(`./server/db.json`);
+const names = ['Rob Hope', 'Sophie Brecht', 'Cameron Lawrence', 'John Doe', 'Oliver Smith', 'Sven Svensson'];
 
-// db.insertMany([
-//   { id: 1, author: 'John', text: 'Hello', createdAt: '2020-01-01', votes: 0 },
-//   { id: 2, author: 'Jane', text: 'Hi', createdAt: '2020-01-01', votes: 0 },
-//   { id: 3, author: 'John', text: 'How are you?', createdAt: '2020-01-01', votes: 0 },
-//   { id: 4, author: 'Jane', text: 'I am fine', createdAt: '2020-01-01', votes: 0 },
-//   { id: 5, author: 'John', text: 'And you?', createdAt: '2020-01-01', votes: 0 },
-//   { id: 6, author: 'Jane', text: 'I am fine too', createdAt: '2020-01-01', votes: 0 },
-//   { id: 7, author: 'John', text: 'And you?', createdAt: '2020-01-01', votes: 0 },
-// ])
+const getRandomName = () => {
+  return names[Math.floor(Math.random() * names.length)];
+}
+
+const db = new Database<Comment>(`./server/db.json`);
 
 const router = new Router();
 
@@ -35,6 +31,8 @@ router.use(async (context, next) => {
   await next();
 });
 
+
+// Get all
 router.get("/api/comments", async (context) => {
   const cs = await db.findMany();
 
@@ -44,14 +42,16 @@ router.get("/api/comments", async (context) => {
   context.response.body = cs;
 });
 
+// Add
 router.post("/api/comments", async (context) => {
-  const body = await context.request.body({ type: "json" }).value;
+  const text = await context.request.body({ type: "text" }).value;
 
-  console.log(body);
   await db.insertOne({
+    author: getRandomName(),
     id: nanoid(),
     createdAt: new Date().toISOString(),
-    ...body,
+    votes: 0,
+    text
   });
 
   const comments = await db.findMany();
@@ -59,6 +59,7 @@ router.post("/api/comments", async (context) => {
   context.response.body = comments;
 });
 
+// Vote
 router.post("/api/comments/:id/vote", async (context) => {
   const id = context.params.id;
 
@@ -86,6 +87,13 @@ app.use((ctx, next) => {
 
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+app.use(async (context) => {
+	await send(context, context.request.url.pathname, {
+		root: `./dist`,
+		index: 'index.html',
+	});
+});
 
 // Log about server start
 app.addEventListener("listen", ({ hostname, port, secure }) => {
