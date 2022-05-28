@@ -1,17 +1,14 @@
-import { Database } from "https://deno.land/x/aloedb@0.9.0/mod.ts";
 import { nanoid } from "https://deno.land/x/nanoid@v3.0.0/nanoid.ts";
-import { Comment } from "./server.ts";
-
-const db = new Database<Comment>(`./server/db.json`);
+import { db } from "./db.ts";
 
 await db.drop();
 
 const getRandomDateString = () => {
-  const d = new Date()
-  d.setMinutes(d.getMinutes() - Math.floor(Math.random() * 60 * 24 * 2))
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - Math.floor(Math.random() * 60 * 24 * 2));
 
-  return d.toISOString()
-}
+  return d.toISOString();
+};
 
 db.insertMany([
   {

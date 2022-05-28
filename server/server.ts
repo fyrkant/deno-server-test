@@ -3,25 +3,21 @@ import {
   Router,
   send,
 } from "https://deno.land/x/oak@v8.0.0/mod.ts";
-import { Database } from "https://deno.land/x/aloedb@0.9.0/mod.ts";
-
 import { nanoid } from "https://deno.land/x/nanoid@v3.0.0/mod.ts";
+import { db } from "./db.ts";
 
-export interface Comment {
-  id: string;
-  author: string;
-  text: string;
-  createdAt: string; // YY-MM-DD HH:MM:SS
-  votes: number;
-}
-
-const names = ['Rob Hope', 'Sophie Brecht', 'Cameron Lawrence', 'John Doe', 'Oliver Smith', 'Sven Svensson'];
+const names = [
+  "Rob Hope",
+  "Sophie Brecht",
+  "Cameron Lawrence",
+  "John Doe",
+  "Oliver Smith",
+  "Sven Svensson",
+];
 
 const getRandomName = () => {
   return names[Math.floor(Math.random() * names.length)];
-}
-
-const db = new Database<Comment>(`./server/db.json`);
+};
 
 const router = new Router();
 
@@ -30,7 +26,6 @@ router.use(async (context, next) => {
   console.log("[SERVER]", `${context.request.method} ${context.request.url}`);
   await next();
 });
-
 
 // Get all
 router.get("/api/comments", async (context) => {
@@ -51,7 +46,7 @@ router.post("/api/comments", async (context) => {
     id: nanoid(),
     createdAt: new Date().toISOString(),
     votes: 0,
-    text
+    text,
   });
 
   const comments = await db.findMany();
@@ -89,10 +84,10 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 app.use(async (context) => {
-	await send(context, context.request.url.pathname, {
-		root: `./dist`,
-		index: 'index.html',
-	});
+  await send(context, context.request.url.pathname, {
+    root: `./dist`,
+    index: "index.html",
+  });
 });
 
 // Log about server start
