@@ -1,23 +1,32 @@
+html {
+  font-size: 10px;
+  ;
+}
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', sans-serif;
   background-color: #e5e5e5;
 }
 
 :root {
   --border-color: #e5e5e5;
+  --chambray: #4b587c;
+}
+
+button {
+  cursor: pointer;
 }
 
 main.container {
   max-width: 960px;
   margin: 1rem auto;
-  padding: 2rem;
+  padding: 4rem 5rem;
   background-color: #fff;
 }
 
 .container>h1 {
-  font-size: 1.6rem;
-  font-weight: normal;
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
 .container>header {
@@ -26,31 +35,93 @@ main.container {
   align-items: center;
   gap: 1rem;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 3rem;
+  padding-bottom: 44px;
+  padding-top: 31px;
 }
 
-.container>header .avatar {
+.avatar {
   flex-shrink: 0;
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 30px;
+  width: 30px;
   border-radius: 50%;
-  background-color: var(--border-color);
 }
 
-.container>header input {
+.add-comment-container input {
   width: 100%;
   padding: 0.5rem;
+  font-size: 1.1rem;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  font-size: 1rem;
 }
 
-.container>header button {
+.add-comment-container button {
   padding: 0.5rem 1rem;
   border: 1px solid #7e34f6;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 1.1rem;
   background-color: #7e34f6;
   color: #fff;
+}
 
+.add-comment-container button:disabled {
+  border: 1px solid #7e34f6;
+  background-color: #b19ad7;
+  color: #cfcfcf;
+}
+
+ul.comments {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  padding-top: 4rem;
+}
+
+.comment {
+  display: flex;
+  align-items: normal;
+  gap: 1rem;
+  /* border-bottom: 1px solid var(--border-color); */
+  padding-bottom: 3rem;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.comment-header .author {
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.comment-header .dot {
+  color: var(--chambray)
+}
+
+.comment-header .date {
+  font-size: 1.1rem;
+  color: var(--chambray)
+}
+
+.comment-content {
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin: .4rem 0;
+}
+
+.comment-footer {
+  margin-top: 1rem;
+  display: flex;
+  gap: 2.8rem;
+}
+
+.comment-footer button,
+.comment-footer span {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  color: var(--chambray);
+  font-size: 1.1rem;
+  font-weight: 600;
 }

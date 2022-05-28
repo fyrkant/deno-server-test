@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev:server": "deno run --allow-net --allow-read --allow-write --watch server/server.ts",
     "dev": "parcel client/index.html",
-    "build": "parcel build client/index.html"
+    "start:server": "deno run --allow-net --allow-read --allow-write server/server.ts",
+    "build": "parcel build client/index.html",
+    "seed": "deno run --allow-read --allow-write server/seed.ts"
   },
   "repository": {
     "type": "git",
