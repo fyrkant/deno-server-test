@@ -2,7 +2,7 @@ export interface CommentType {
   id: string;
   author: string;
   text: string;
-  createdAt: string; // YY-MM-DD HH:MM:SS
+  createdAt: string;
   votes: number;
   parentCommentId?: string;
   replies: CommentType[];

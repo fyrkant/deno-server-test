@@ -16,6 +16,7 @@ export const Comment: React.FC<{
 
   return (
     <li
+      data-id={comment.id}
       className={clsx({
         "with-replies": hasReplies,
         "in-focus": inFocus,

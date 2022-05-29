@@ -17,7 +17,7 @@ export const App = () => {
   );
 
   const comments = Array.isArray(data)
-    ? data.map((c) => {
+    ? data.filter((c) => !c.parentCommentId).map((c) => {
       const replies = data.filter((r) => r.parentCommentId === c.id);
 
       return { ...c, replies } as CommentType;
@@ -29,20 +29,44 @@ export const App = () => {
     submitButtonRef.current!.disabled = true;
     const comment = inputRef.current!.value;
     if (comment) {
-      await api.add(comment, replyingTo);
+      try {
+        await api.add(comment, replyingTo);
+
+        mutate();
+
+        const wasReplyingTo = replyingTo;
+        setReplyingTo(undefined);
+        inputRef.current!.value = "";
+        submitButtonRef.current!.disabled = false;
+
+        setTimeout(() => {
+          const li = document.querySelector(`li[data-id="${wasReplyingTo}"]`);
+          if (li) {
+            li.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
+      } catch (e) {
+        // There should probably be some kind of error handling here.
+        console.error(e);
+      }
     }
-
-    mutate();
-
-    setReplyingTo(undefined);
-    inputRef.current!.value = "";
-    submitButtonRef.current!.disabled = false;
   };
 
   const handleUpvote = async (id: string) => {
-    await api.upvote(id);
-    mutate();
+    try {
+      await api.upvote(id);
+      mutate();
+    } catch (e) {
+      // There should probably be some kind of error handling here.
+      console.error(e);
+    }
   };
+
+  React.useEffect(() => {
+    if (replyingTo) {
+      inputRef.current!.focus();
+    }
+  }, [replyingTo]);
 
   React.useEffect(() => {
     const sse = api.getEventSource();
