@@ -2,6 +2,7 @@ import {
   Application,
   Router,
   send,
+  ServerSentEvent,
 } from "https://deno.land/x/oak@v8.0.0/mod.ts";
 import { nanoid } from "https://deno.land/x/nanoid@v3.0.0/mod.ts";
 import { db } from "./db.ts";
@@ -31,15 +32,14 @@ router.use(async (context, next) => {
 router.get("/api/comments", async (context) => {
   const cs = await db.findMany();
 
-  console.log(cs);
-
   context.response.type = "json";
   context.response.body = cs;
 });
 
 // Add
 router.post("/api/comments", async (context) => {
-  const text = await context.request.body({ type: "text" }).value;
+  const { text, replyingTo } = await context.request.body({ type: "json" })
+    .value;
 
   await db.insertOne({
     author: getRandomName(),
@@ -47,12 +47,17 @@ router.post("/api/comments", async (context) => {
     createdAt: new Date().toISOString(),
     votes: 0,
     text,
+    parentCommentId: replyingTo,
   });
 
   const comments = await db.findMany();
   context.response.type = "json";
   context.response.body = comments;
 });
+
+let triggerEvent = () => {
+  // no op
+}
 
 // Vote
 router.post("/api/comments/:id/vote", async (context) => {
@@ -66,10 +71,19 @@ router.post("/api/comments/:id/vote", async (context) => {
   }
 
   await db.updateOne({ id }, { votes: comment.votes + 1 });
-
+  triggerEvent()
   const comments = await db.findMany();
   context.response.type = "json";
   context.response.body = comments;
+});
+
+// Event source
+router.get("/api/comments/stream", (context) => {
+  const target = context.sendEvents();
+
+  triggerEvent = () => {
+    target.dispatchMessage("Hello world!");
+  }
 });
 
 const app = new Application();

@@ -31,7 +31,6 @@ main.container {
 
 .container>header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 1rem;
   border-bottom: 1px solid var(--border-color);
@@ -44,6 +43,22 @@ main.container {
   height: 30px;
   width: 30px;
   border-radius: 50%;
+}
+
+.add-comment-container > div {
+  width: 100%;
+  position:relative;
+  
+}
+
+.reply-to {
+  position:absolute;
+  top: -20px;
+}
+
+.add-comment-container button.cancel-button {  
+  background-color: #fff;
+  color: #7e34f6;
 }
 
 .add-comment-container input {
@@ -100,6 +115,14 @@ li.with-replies {
   position: relative;
   margin-left: -1.5rem;
   margin-bottom: 3rem;
+}
+
+.comments.is-replying li {
+  display: none;
+}
+
+.comments li.in-focus, li.in-focus .comments li {
+  display: list-item;
 }
 
 .comment-header {

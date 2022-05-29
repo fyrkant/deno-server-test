@@ -8,10 +8,10 @@ export const api = {
   getAll: () => {
     return fetch(baseUrl + "/comments").then((res) => res.json());
   },
-  add: (comment) => {
+  add: (text, replyingTo) => {
     return fetch(baseUrl + "/comments", {
       method: "POST",
-      body: comment,
+      body: JSON.stringify({ text, replyingTo }),
     }).then((r) => r.json());
   },
   upvote: (id) => {
@@ -19,4 +19,8 @@ export const api = {
       method: "POST",
     }).then((r) => r.json());
   },
+};
+
+export const getEventSource = () => {
+  return new EventSource(baseUrl + "/comments/stream");
 };
