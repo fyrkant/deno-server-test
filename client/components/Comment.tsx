@@ -1,8 +1,14 @@
 import React from "react";
 import { format as formatDate } from "timeago.js";
 import clsx from "clsx";
+import { CommentType } from "../types";
 
-export const Comment = ({ comment, onUpvote, onReply, inFocus }) => {
+export const Comment: React.FC<{
+  comment: CommentType;
+  onUpvote: (id: string) => void;
+  onReply: (id: string) => void;
+  inFocus: boolean | undefined;
+}> = ({ comment, onUpvote, onReply, inFocus }) => {
   const dateString = formatDate(comment.createdAt);
 
   const hasReplies = comment?.replies?.length > 0;
@@ -64,7 +70,13 @@ export const Comment = ({ comment, onUpvote, onReply, inFocus }) => {
             {comment.replies.sort((a, b) =>
               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
             ).map((reply) => (
-              <Comment key={reply.id} comment={reply} onUpvote={onUpvote} />
+              <Comment
+                key={reply.id}
+                comment={reply}
+                onUpvote={onUpvote}
+                onReply={onReply}
+                inFocus={false}
+              />
             ))}
           </ul>
         )

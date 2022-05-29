@@ -7,7 +7,8 @@
     "dev": "parcel client/index.html",
     "start": "deno run --allow-net --allow-read --allow-write server/server.ts",
     "build": "parcel build client/index.html",
-    "seed": "deno run --allow-read --allow-write server/seed.ts"
+    "seed": "deno run --allow-read --allow-write server/seed.ts",
+    "tsc": "tsc --project ./client/tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -20,8 +21,11 @@
   },
   "homepage": "https://github.com/fyrkant/deno-server-test#readme",
   "devDependencies": {
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.5",
     "parcel": "^2.6.0",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "typescript": "^4.7.2"
   },
   "dependencies": {
     "clsx": "^1.1.1",

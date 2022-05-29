@@ -57,7 +57,7 @@ router.post("/api/comments", async (context) => {
 
 let triggerEvent = () => {
   // no op
-}
+};
 
 // Vote
 router.post("/api/comments/:id/vote", async (context) => {
@@ -71,7 +71,7 @@ router.post("/api/comments/:id/vote", async (context) => {
   }
 
   await db.updateOne({ id }, { votes: comment.votes + 1 });
-  triggerEvent()
+  triggerEvent();
   const comments = await db.findMany();
   context.response.type = "json";
   context.response.body = comments;
@@ -83,7 +83,7 @@ router.get("/api/comments/stream", (context) => {
 
   triggerEvent = () => {
     target.dispatchMessage("Hello world!");
-  }
+  };
 });
 
 const app = new Application();

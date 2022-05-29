@@ -38,17 +38,18 @@ await db.insertMany([
 ]);
 
 const sophiesComment = await db.findOne({
-  author: 'Sophie Brecht',
+  author: "Sophie Brecht",
 });
 
-const newDate  = new Date(sophiesComment?.createdAt || '');
-newDate.setHours(newDate.getHours() + 1)
+const newDate = new Date(sophiesComment?.createdAt || "");
+newDate.setHours(newDate.getHours() + 1);
 
 await db.insertOne({
   id: nanoid(),
-  author: 'Sven Svensson',
-  text:'Thanks Sophie! Last year has been an absolute goldrush for the creator economy. Slowly at first, then all at once. Will be interesting to see how this ecosystem evolves over the next few years',
+  author: "Sven Svensson",
+  text:
+    "Thanks Sophie! Last year has been an absolute goldrush for the creator economy. Slowly at first, then all at once. Will be interesting to see how this ecosystem evolves over the next few years",
   createdAt: newDate.toISOString(),
   votes: 0,
   parentCommentId: sophiesComment?.id,
-})
+});
