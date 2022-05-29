@@ -76,12 +76,30 @@ ul.comments {
   padding-top: 4rem;
 }
 
+li.with-replies {
+  border-left: 2px solid #EAEAEA;
+}
+
+.comments .comments {
+  padding: 0;
+  margin-left: 4rem;
+}
+
+.comment .border {
+  display:none;
+}
+
+.comments li {
+  margin-left: 1.5rem;
+}
+
 .comment {
   display: flex;
   align-items: normal;
   gap: 1rem;
-  /* border-bottom: 1px solid var(--border-color); */
-  padding-bottom: 3rem;
+  position: relative;
+  margin-left: -1.5rem;
+  margin-bottom: 3rem;
 }
 
 .comment-header {

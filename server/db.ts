@@ -12,6 +12,7 @@ export interface Comment {
   text: string;
   createdAt: string; // YY-MM-DD HH:MM:SS
   votes: number;
+  parentCommentId?: string;
 }
 
 export const db = new Database<Comment>(`${DIRNAME}/../db.json`);
